@@ -1,0 +1,32 @@
+{
+  "name": "tanstack-from-scratch",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "packageManager": "pnpm@9.1.0",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "@tanstack/react-router": "^1.128.4",
+    "@tanstack/react-router-devtools": "^1.128.4",
+    "@tanstack/react-start": "^1.128.4",
+    "clsx": "^2.1.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.11",
+    "vite": "^7.0.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "typescript": "^5.8.3",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
