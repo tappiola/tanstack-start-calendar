@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/_pathlessLayout/event/$date')({
+export const Route = createFileRoute('/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello, new-event!</div>
+  return <div>Select any date to continue</div>
 }

@@ -10,53 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as Page2RouteImport } from './routes/page2'
-import { Route as PathlessLayoutRouteRouteImport } from './routes/_pathlessLayout/route'
-import { Route as PathlessLayoutEventDateRouteImport } from './routes/_pathlessLayout/event.$date'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as EventDateRouteImport } from './routes/event.$date'
 
 const Page2Route = Page2RouteImport.update({
   id: '/page2',
   path: '/page2',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PathlessLayoutRouteRoute = PathlessLayoutRouteRouteImport.update({
-  id: '/_pathlessLayout',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PathlessLayoutEventDateRoute = PathlessLayoutEventDateRouteImport.update({
+const EventDateRoute = EventDateRouteImport.update({
   id: '/event/$date',
   path: '/event/$date',
-  getParentRoute: () => PathlessLayoutRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/page2': typeof Page2Route
-  '/event/$date': typeof PathlessLayoutEventDateRoute
+  '/event/$date': typeof EventDateRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/page2': typeof Page2Route
-  '/event/$date': typeof PathlessLayoutEventDateRoute
+  '/event/$date': typeof EventDateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_pathlessLayout': typeof PathlessLayoutRouteRouteWithChildren
+  '/': typeof IndexRoute
   '/page2': typeof Page2Route
-  '/_pathlessLayout/event/$date': typeof PathlessLayoutEventDateRoute
+  '/event/$date': typeof EventDateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/page2' | '/event/$date'
+  fullPaths: '/' | '/page2' | '/event/$date'
   fileRoutesByTo: FileRoutesByTo
-  to: '/page2' | '/event/$date'
-  id:
-    | '__root__'
-    | '/_pathlessLayout'
-    | '/page2'
-    | '/_pathlessLayout/event/$date'
+  to: '/' | '/page2' | '/event/$date'
+  id: '__root__' | '/' | '/page2' | '/event/$date'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  PathlessLayoutRouteRoute: typeof PathlessLayoutRouteRouteWithChildren
+  IndexRoute: typeof IndexRoute
   Page2Route: typeof Page2Route
+  EventDateRoute: typeof EventDateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,37 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Page2RouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_pathlessLayout': {
-      id: '/_pathlessLayout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof PathlessLayoutRouteRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_pathlessLayout/event/$date': {
-      id: '/_pathlessLayout/event/$date'
+    '/event/$date': {
+      id: '/event/$date'
       path: '/event/$date'
       fullPath: '/event/$date'
-      preLoaderRoute: typeof PathlessLayoutEventDateRouteImport
-      parentRoute: typeof PathlessLayoutRouteRoute
+      preLoaderRoute: typeof EventDateRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface PathlessLayoutRouteRouteChildren {
-  PathlessLayoutEventDateRoute: typeof PathlessLayoutEventDateRoute
-}
-
-const PathlessLayoutRouteRouteChildren: PathlessLayoutRouteRouteChildren = {
-  PathlessLayoutEventDateRoute: PathlessLayoutEventDateRoute,
-}
-
-const PathlessLayoutRouteRouteWithChildren =
-  PathlessLayoutRouteRoute._addFileChildren(PathlessLayoutRouteRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
-  PathlessLayoutRouteRoute: PathlessLayoutRouteRouteWithChildren,
+  IndexRoute: IndexRoute,
   Page2Route: Page2Route,
+  EventDateRoute: EventDateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

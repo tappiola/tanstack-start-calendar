@@ -1,10 +1,11 @@
 import * as fs from 'fs'
 import {createFileRoute, Link, Outlet, redirect} from '@tanstack/react-router'
-import { createServerFn } from '@tanstack/react-start'
+import { createServerFn, useServerFn, useQuery } from '@tanstack/react-start'
 import {formatDate, generateMonth, getMonthName, getWeekdayName} from "~/utils/dateUtils";
 import {COLUMN_CLASSES} from "~/utils/styling";
 import clsx from 'clsx';
-import {Route as EventRoute} from './_pathlessLayout/event.$date'
+import {Route as EventRoute} from '../routes/event.$date';
+// import {getAllHolidays, getServerTime} from '../actions';
 
 const filePath = 'count.txt'
 
@@ -47,17 +48,18 @@ export const updateCount = createServerFn({ method: 'POST' })
         return 'Koala'
     })
 
-export const Year = createFileRoute('/')({
-  component: Home,
-  // loader: async () => await getCount(),
-    loader: () => {
-        const year = new Date().getFullYear();
-        // throw redirect({ to: `/${year}` });
-    },
-})
 
-function Home() {
-  // const state = Route.useLoaderData()
+export const Calendar = () => {
+  // const allHolidays = getAllHolidays();
+  // console.log({allHolidays});
+
+    // const getTime = useServerFn(getServerTime);
+    // const timeQuery = useQuery({
+    //     queryKey: 'time',
+    //     queryFn: () => getTime(),
+    // })
+    // const {data} = timeQuery();
+    // console.log({data});
 
   return (
       <div className="p-9 h-screen bg-stone-800 text-white">

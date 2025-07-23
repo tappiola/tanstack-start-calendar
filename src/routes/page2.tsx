@@ -34,7 +34,7 @@ const updateCount = createServerFn({ method: 'POST' })
       const count = await readCount()
       await fs.promises.writeFile(filePath, `${count + addByAmount}`)
       // Reload the page to trigger the loader again
-      // return {ok: true, status: 301, headers: { Location: '/page2' } }
+      return {ok: true, status: 301, headers: { Location: '/page2' } }
     })
 
 export const Route = createFileRoute('/page2')({
