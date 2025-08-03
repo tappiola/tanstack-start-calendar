@@ -30,15 +30,22 @@ export const createVacation = createServerFn({ method: "POST" })
     } as Prisma.VacationsCreateInput;
   })
   .handler(async ({ data }) => {
-    // await prisma.vacations.create({
-    //   data: data as Prisma.VacationsCreateInput,
-    // });
     await prisma.vacations.upsert({
       where: {
         date: data.date,
       },
       update: data,
       create: data,
+    });
+  });
+
+export const deleteVacation = createServerFn({ method: "POST" })
+  .validator((date: string) => new Date(date))
+  .handler(async ({ data: date }) => {
+    return await prisma.vacations.delete({
+      where: {
+        date,
+      },
     });
   });
 

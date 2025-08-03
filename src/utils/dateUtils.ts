@@ -83,13 +83,10 @@ export const formatDate = (
   return date.toISOString().slice(0, 10);
 };
 
-export const prettyFormatDate = (
-  dateStr: string,
-  locale: string = navigator.language,
-): string => {
+export const prettyFormatDate = (dateStr: string): string => {
   const date = new Date(dateStr);
 
-  return new Intl.DateTimeFormat(locale ?? "en-GB", {
+  return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "short",
     year: "numeric",

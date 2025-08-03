@@ -1,8 +1,9 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
-import { createVacation, getEventByDate } from "~/actions";
+import { createVacation, deleteVacation, getEventByDate } from "~/actions";
 import { Modal } from "~/components/modal";
 import { prettyFormatDate } from "~/utils/dateUtils";
+import clsx from "clsx";
 
 const RouteComponent = () => {
   const router = useRouter();
@@ -12,9 +13,7 @@ const RouteComponent = () => {
 
   const [error, setError] = useState(null);
 
-  console.log(error);
-
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -27,20 +26,34 @@ const RouteComponent = () => {
     }
   };
 
+  const onDelete = async () => {
+    await deleteVacation({ data: date });
+    await router.invalidate();
+    await router.navigate({ to: "/" });
+  };
+
   return (
     <Modal
       open={true}
       onClose={() => router.navigate({ to: "/" })}
       footer={
-        <button
-          type="submit"
-          className="border-2 text-orange-400 border-orange-400  px-4 py-3 rounded-xl uppercase"
-        >
-          {event ? "Update event" : "Add event"}
-        </button>
+        <div className="flex gap-7 text-neutral-400 hover:text-neutral-50">
+          {event && (
+            <button className="hover:cursor-pointer" onClick={onDelete}>
+              Delete
+            </button>
+          )}
+          <button
+            type="submit"
+            form="event-form"
+            className="hover:cursor-pointer border-2 text-orange-400 border-orange-400  px-4 py-3 rounded-xl uppercase"
+          >
+            {event ? "Update event" : "Add event"}
+          </button>
+        </div>
       }
     >
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} id="event-form">
         <h1 className="font-semibold text-xl">
           Event for {prettyFormatDate(date)}
         </h1>
@@ -50,10 +63,18 @@ const RouteComponent = () => {
           name="title"
           placeholder="Enter event title"
           defaultValue={event?.name}
-          className="w-full px-4 py-3 rounded-xl text-white placeholder:text-neutral-400
-             focus:outline-none focus:ring-2 focus:ring-amber-600 mt-4 -mb-2 border border-neutral-600"
+          className={clsx(
+            "w-full px-4 py-3 rounded-xl text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-600 mt-4 -mb-2 border border-neutral-600 ",
+            { "border-red-800 ring-red-800": error },
+          )}
+          aria-describedby={error ? "event-error" : undefined}
+          aria-invalid={!!error}
         />
-        {error && <div className="text-red-500">{error}</div>}
+        {error && (
+          <div id="event-error" className="text-red-800 text-sm pl-1 pt-3">
+            {error}
+          </div>
+        )}
       </form>
     </Modal>
   );

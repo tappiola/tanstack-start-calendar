@@ -12,7 +12,7 @@ import { Route as EventRoute } from "~/routes/event.$date";
 
 export const Calendar = () => {
   return (
-    <div className="p-9 min-h-screen bg-stone-800 text-white">
+    <div className="p-9 min-h-screen bg-stone-800 text-neutral-50">
       <Outlet />
       <div className="grid grid-cols-3 gap-9 max-w-5/6 mx-auto justify-center">
         {Array.from({ length: 12 }, (_, idx) => (
