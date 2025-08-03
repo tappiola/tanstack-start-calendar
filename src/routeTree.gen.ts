@@ -9,15 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as Page2RouteImport } from './routes/page2'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventDateRouteImport } from './routes/event.$date'
 
-const Page2Route = Page2RouteImport.update({
-  id: '/page2',
-  path: '/page2',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,43 +25,32 @@ const EventDateRoute = EventDateRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/page2': typeof Page2Route
   '/event/$date': typeof EventDateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/page2': typeof Page2Route
   '/event/$date': typeof EventDateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/page2': typeof Page2Route
   '/event/$date': typeof EventDateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/page2' | '/event/$date'
+  fullPaths: '/' | '/event/$date'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/page2' | '/event/$date'
-  id: '__root__' | '/' | '/page2' | '/event/$date'
+  to: '/' | '/event/$date'
+  id: '__root__' | '/' | '/event/$date'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  Page2Route: typeof Page2Route
   EventDateRoute: typeof EventDateRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/page2': {
-      id: '/page2'
-      path: '/page2'
-      fullPath: '/page2'
-      preLoaderRoute: typeof Page2RouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -87,7 +70,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  Page2Route: Page2Route,
   EventDateRoute: EventDateRoute,
 }
 export const routeTree = rootRouteImport
