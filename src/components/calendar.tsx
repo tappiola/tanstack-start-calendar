@@ -1,18 +1,20 @@
 import { Link, Outlet } from "@tanstack/react-router";
 import {
-  formatDate,
-  generateMonth,
-  getMonthName,
-  getWeekdayName,
+    formatDate,
+    generateMonth,
+    getMonthName,
+    getWeekdayName, isSameDate,
 } from "~/utils/dateUtils";
 import { COLUMN_CLASSES } from "~/utils/styling";
 import clsx from "clsx";
 import { Route as MainRoute } from "~/routes/__root";
 import { Route as EventRoute } from "~/routes/event.$date";
+import { Tooltip } from "~/components/tooltip";
 
 export const Calendar = () => {
   return (
     <div className="p-9 min-h-screen bg-stone-800 text-neutral-50">
+        <div>Select date to continue</div>
       <Outlet />
       <div className="grid grid-cols-3 gap-9 max-w-5/6 mx-auto justify-center">
         {Array.from({ length: 12 }, (_, idx) => (
@@ -37,18 +39,26 @@ const Month = ({ monthIndex }: { monthIndex: number }) => {
         ))}
         {generateMonth(bankHolidays, vacations, 2025, monthIndex).days.map(
           (day, idx) => (
-            <Link
+            <Tooltip
+              text={day.title}
               key={day.dayOfMonth}
-              to={EventRoute.to}
-              params={{ date: formatDate(day.dayOfMonth, monthIndex, 2025) }}
               className={clsx({
                 [COLUMN_CLASSES[day.dayOfWeek]]: idx === 0,
-                "text-orange-700": day.isWeekend,
-                "text-amber-300": day.isVacation,
               })}
             >
-              {day.dayOfMonth}
-            </Link>
+              <Link
+                to={EventRoute.to}
+                params={{ date: formatDate(day.date) }}
+                disabled={day.isWeekend}
+                className={clsx({
+                  "text-orange-700": day.isWeekend,
+                  "text-amber-300": day.isVacation,
+                  "font-bold text-orange-400": isSameDate(day.date, new Date()),
+                }, 'select-none')}
+              >
+                {day.dayOfMonth}
+              </Link>
+            </Tooltip>
           ),
         )}
       </div>

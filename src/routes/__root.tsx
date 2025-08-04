@@ -11,7 +11,6 @@ const RootComponent = () => {
   return (
     <RootDocument>
       <Calendar />
-      {/*<Outlet />*/}
       <TanStackRouterDevtools />
     </RootDocument>
   );

@@ -3,14 +3,15 @@ import { Holidays, Vacations } from "@prisma/client";
 export type Day = {
   date: Date;
   dayOfMonth: number;
-  dayOfWeek: number; // 0 - Sunday, 6 - Saturday
+  dayOfWeek: number;
   isWeekend: boolean;
   isVacation: boolean;
+  title?: string;
 };
 
 export type Month = {
   year: number;
-  month: number; // 0 - January, 11 - December
+  month: number;
   days: Day[];
 };
 
@@ -48,6 +49,8 @@ export const generateMonth = (
       isWeekend:
         dayOfWeek === 0 || dayOfWeek === 6 || isDateInList(bankHolidays, date),
       isVacation: isDateInList(vacations, date),
+      title: [...vacations, ...bankHolidays].find((h) => isSameDate(h.date, date))?.name
+          ?? ((dayOfWeek === 0 || dayOfWeek === 6) ? 'Day off' : undefined),
     });
   }
 
@@ -75,13 +78,8 @@ export const getWeekdayName = (
   );
 
 export const formatDate = (
-  day: number,
-  month: number,
-  year: number,
-): string => {
-  const date = new Date(Date.UTC(year, month, day));
-  return date.toISOString().slice(0, 10);
-};
+  date: Date
+): string => date.toISOString().slice(0, 10);
 
 export const prettyFormatDate = (dateStr: string): string => {
   const date = new Date(dateStr);
@@ -91,8 +89,4 @@ export const prettyFormatDate = (dateStr: string): string => {
     month: "short",
     year: "numeric",
   }).format(date);
-};
-
-export const getDate = (day: number, month: number, year: number): Date => {
-  return new Date(Date.UTC(year, month, day));
 };
