@@ -1,6 +1,8 @@
 # TanStack Start Event Calendar
 
-A full project for an event calendar built with [TanStack Start](https://tanstack.com/start). It combines [TanStack Router](https://tanstack.com/router) for routing, [Tailwind CSS](https://tailwindcss.com) for styling, and a Prisma-powered backend backed by SQLite.
+An event calendar built with [TanStack Start](https://tanstack.com/start). It uses [TanStack Router](https://tanstack.com/router) for routing, [Tailwind CSS](https://tailwindcss.com) for styling, and a Prisma-powered backend backed by SQLite.
+
+Same logic has implemented using [Next.js](https://github.com/tappiola/next-js-calendar) to compare capabilites of frameworks.
 
 ## Getting Started
 
