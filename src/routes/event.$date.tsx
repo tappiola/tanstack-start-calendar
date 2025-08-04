@@ -1,4 +1,8 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  linkOptions,
+  useRouter,
+} from "@tanstack/react-router";
 import { useState } from "react";
 import { createVacation, deleteVacation, getEventByDate } from "~/actions";
 import { Modal } from "~/components/modal";
@@ -9,6 +13,11 @@ const RouteComponent = () => {
   const router = useRouter();
 
   const { date } = Route.useParams();
+  const year = Number(date.slice(0, 4));
+  const returnRoute = linkOptions({
+    to: "/",
+    search: { year: year !== new Date().getFullYear() ? year : undefined },
+  });
   const event = Route.useLoaderData();
 
   const [error, setError] = useState(null);
@@ -20,7 +29,7 @@ const RouteComponent = () => {
       const formData = new FormData(event.currentTarget);
       await createVacation({ data: formData });
       await router.invalidate();
-      await router.navigate({ to: "/" });
+      await router.navigate(returnRoute);
     } catch (e) {
       setError(e.message);
     }
@@ -29,13 +38,13 @@ const RouteComponent = () => {
   const onDelete = async () => {
     await deleteVacation({ data: date });
     await router.invalidate();
-    await router.navigate({ to: "/" });
+    await router.navigate(returnRoute);
   };
 
   return (
     <Modal
       open={true}
-      onClose={() => router.navigate({ to: "/" })}
+      onClose={() => router.navigate(returnRoute)}
       footer={
         <div className="flex gap-7 text-neutral-400 hover:text-neutral-50">
           {event && (

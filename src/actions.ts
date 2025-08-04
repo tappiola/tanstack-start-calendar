@@ -1,6 +1,19 @@
 import { createServerFn } from "@tanstack/react-start";
 import prisma from "@lib/prisma";
 import { Prisma } from "@prisma/client";
+import { z } from "zod";
+
+const dateSchema = z.string().transform((val, ctx) => {
+  const parsed = new Date(val);
+  if (isNaN(parsed.getTime())) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Invalid date string",
+    });
+    return z.NEVER;
+  }
+  return parsed;
+});
 
 export const getAllHolidays = createServerFn({ method: "GET" }).handler(
   async () => {
@@ -40,7 +53,7 @@ export const createVacation = createServerFn({ method: "POST" })
   });
 
 export const deleteVacation = createServerFn({ method: "POST" })
-  .validator((date: string) => new Date(date))
+  .validator(dateSchema)
   .handler(async ({ data: date }) => {
     return await prisma.vacations.delete({
       where: {
@@ -50,12 +63,8 @@ export const deleteVacation = createServerFn({ method: "POST" })
   });
 
 export const getEventByDate = createServerFn({ method: "GET" })
-  .validator((date: string) => new Date(date))
+  .validator(dateSchema)
   .handler(async ({ data: date }) => {
-    if (isNaN(date.getTime())) {
-      return null;
-    }
-
     return await prisma.vacations.findUnique({
       where: {
         date,

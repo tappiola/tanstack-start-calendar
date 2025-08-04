@@ -49,8 +49,10 @@ export const generateMonth = (
       isWeekend:
         dayOfWeek === 0 || dayOfWeek === 6 || isDateInList(bankHolidays, date),
       isVacation: isDateInList(vacations, date),
-      title: [...vacations, ...bankHolidays].find((h) => isSameDate(h.date, date))?.name
-          ?? ((dayOfWeek === 0 || dayOfWeek === 6) ? 'Day off' : undefined),
+      title:
+        [...vacations, ...bankHolidays].find((h) => isSameDate(h.date, date))
+          ?.name ??
+        (dayOfWeek === 0 || dayOfWeek === 6 ? "Day off" : undefined),
     });
   }
 
@@ -77,9 +79,8 @@ export const getWeekdayName = (
     new Date(2025, 0, weekdayIndex + 6),
   );
 
-export const formatDate = (
-  date: Date
-): string => date.toISOString().slice(0, 10);
+export const formatDate = (date: Date): string =>
+  date.toISOString().slice(0, 10);
 
 export const prettyFormatDate = (dateStr: string): string => {
   const date = new Date(dateStr);
