@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { cloneElement, isValidElement } from "react";
 
 type TooltipProps = {
   text?: string;

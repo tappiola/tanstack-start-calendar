@@ -7,12 +7,12 @@ import appCss from "../app.css?url";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Calendar } from "~/components/calendar";
 import { getAllHolidays } from "~/actions";
-import {YearSwitch} from "~/components/yearSwitch";
+import { YearSwitch } from "~/components/yearSwitch";
 
 const RootComponent = () => {
   return (
     <RootDocument>
-      <YearSwitch/>
+      <YearSwitch />
       <Calendar />
       <TanStackRouterDevtools />
     </RootDocument>
