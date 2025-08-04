@@ -91,5 +91,6 @@ const RouteComponent = () => {
 
 export const Route = createFileRoute("/event/$date")({
   component: RouteComponent,
+  notFoundComponent: () => <p className="text-center">Event not found</p>,
   loader: ({ params }) => getEventByDate({ data: params.date }),
 });
