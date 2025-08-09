@@ -17,8 +17,10 @@ const dateSchema = z.string().transform((val, ctx) => {
 
 export const getAllHolidays = createServerFn({ method: "GET" }).handler(
   async () => {
-    const bankHolidays = await prisma.holidays.findMany();
-    const vacations = await prisma.vacations.findMany();
+      const [bankHolidays, vacations] = await Promise.all([
+          prisma.holidays.findMany(),
+          prisma.vacations.findMany(),
+      ]);
 
     return { bankHolidays, vacations };
   },

@@ -40,8 +40,8 @@ export const generateMonth = (
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month, day);
-    const dayOfWeek = date.getDay(); // 0 - Sunday
+    const date = new Date(Date.UTC(year, month, day));
+    const dayOfWeek = date.getDay();
     days.push({
       date,
       dayOfMonth: day,

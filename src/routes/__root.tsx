@@ -25,7 +25,7 @@ const RootDocument = ({ children }: Readonly<{ children: ReactNode }>) => {
       <head>
         <HeadContent />
       </head>
-      <body className="p-6 min-h-screen bg-stone-800 text-neutral-50">
+      <body className="p-6 min-h-screen bg-stone-800 text-neutral-50 antialiased">
         {children}
         <Scripts />
       </body>
@@ -47,7 +47,10 @@ export const Route = createRootRoute({
         title: "Event calendar",
       },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico" },
+    ],
   }),
   component: RootComponent,
   validateSearch: z.object({
