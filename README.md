@@ -17,7 +17,7 @@ Same logic has implemented using [Next.js](https://github.com/tappiola/next-js-c
    Create a `.env` file in the project root with a PostgreSQL connection URL, for example:
 
    ```env
-   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/tanstack_calendar?schema=public"
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/tanstack_calendar"
    ```
 
    Then run:
